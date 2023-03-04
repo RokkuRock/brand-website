@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "name": "Language Tutoring Service",
+      "price": 400,
+      "imgUrl": "/imgs/tutor.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Translation Service",
+      "price": 1000,
+      "imgUrl": "/imgs/translate.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Consultating Service",
+      "price": 300,
+      "imgUrl": "/imgs/consult.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Language Exchanging",
+      "price": 250,
+      "imgUrl": "/imgs/exchange.jpg"
+    }
+  ]
