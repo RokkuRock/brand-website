@@ -24,7 +24,19 @@ export function StoreItem ({ id, name, price, imgUrl }: StoreItemProps) {
                 <span className="ms-2 text-muted">{formatCurrency(price)}/hour</span>
             </Card.Title>
             <div className="mt-auto">
-                {quantity === 0 ? <Button className="w-100">+ Add to Cart</Button> : null}
+                {quantity === 0 ? (
+                    <Button className ="w-100">+ Add to Cart</Button>
+                ) : <div className="d-flex align-items-center flex-column" style={{ gap: ".5rem" }}>
+                    <div className ="d-flex align-items-center justify-content-center" style={{ gap: ".5rem"}}
+                    >
+                        <Button>-</Button>
+                            <div>
+                                <span className="ft-3">{quantity}</span> in cart
+                            </div>
+                        <Button>+</Button>
+                    </div>
+                    <Button variant="danger" size="sm">Remove</Button>    
+                </div>}
             </div>
         </Card.Body>
     </Card>
