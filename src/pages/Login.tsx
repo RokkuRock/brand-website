@@ -1,41 +1,50 @@
-import React, { useState } from 'react';
-import { Button, Form, Container} from 'react-bootstrap';
+import { Menu, Form } from "semantic-ui-react";
+import React from 'react';
+import { useNavigate} from 'react-router-dom';
+import { Button, Container} from 'react-bootstrap';
+import firebase from '../utilities/firebase';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate()
+  const [activeItem, setActiveItem] = React.useState('register');
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // TODO: handle registration logic
-  };  
+  function onSubmit() {
+    if (activeItem === 'register') {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          navigate('/');
+        })
+    } else if (activeItem === 'signin') {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          navigate('/');
+        })
+    }
+  }  
 
   return (
-  <Container className='d-flex justify-content-center align-items-center'>
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formBasicUsername">
-        <Form.Label>Username</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Your username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-      </Form.Group>
-
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Your assword"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </Form.Group>
-
-      <Button variant="primary" type="submit" className="mx-5 mt-3 px-4 py-2 bg-dark text-white">
-        Sign in
-      </Button>
+  <Container>
+    <Menu style={{ marginTop: 25 }}>
+    <Menu.Item style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Button active={activeItem ==="register"} onClick={() => setActiveItem('register')} style={{ marginRight: 3 }} >註冊</Button>
+      <Button active={activeItem ==="signin"} onClick={() => setActiveItem('signin')} style={{ marginLeft: 3 }} >登入</Button>
+    </Menu.Item>
+    </Menu>
+    <Form onSubmit={onSubmit}>
+      <Form.Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Your Email" type="email"/>
+      <Form.Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)}placeholder="Enter Your Password" type="password"/>
+      <Form.Button>
+        {activeItem === 'register' && '註冊'}
+        {activeItem === 'signin' && '登入'}
+      </Form.Button>
     </Form>
   </Container>
   );
@@ -44,9 +53,9 @@ function LoginForm() {
 export default function Login() {
   return (
     <div>
-      <hr />
-      <h1 className='d-flex justify-content-center align-items-center'>Log in</h1>
       <LoginForm />
     </div>
-  )
-  }
+  );
+}
+
+

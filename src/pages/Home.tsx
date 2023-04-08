@@ -1,5 +1,4 @@
 import React from 'react';
-
 const TopHeader: React.FC = () => {
   return (
     <div className="top-header" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

@@ -1,3 +1,5 @@
+import { Search } from 'semantic-ui-react';
+
 function SearchEngine () {
     return (
         <div className="input-group">
