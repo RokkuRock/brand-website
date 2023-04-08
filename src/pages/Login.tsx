@@ -1,63 +1,52 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import React, { useState } from 'react';
+import { Button, Form, Container} from 'react-bootstrap';
 
-const LoginForm: React.FC = () => {
+function LoginForm() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // TODO: handle registration logic
+  };  
+
   return (
-    <form style={{position: "relative" , margin: "100px" }}>
-        <div className="form-outline mb-4">
-            <input type="email" id="form2Example1" className="form-control" />
-            <label className="form-label" id="form2Example1">Email address</label>
-        </div>
+  <Container className='d-flex justify-content-center align-items-center'>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formBasicUsername">
+        <Form.Label>Username</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Your username"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
+      </Form.Group>
 
-        <div className="form-outline mb-4">
-            <input type="password" id="form2Example2" className="form-control" />
-            <label className="form-label" id="form2Example2">Password</label>
-            </div>
+      <Form.Group controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Your assword"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+      </Form.Group>
 
-        <div className="row mb-4">
-            <div className="col d-flex justify-content-center">
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                <label className="form-check-label" id="form2Example31"> Remember me </label>
-            </div>
-        </div>
-
-        <div className="col">
-            <a href="#!">Forgot password?</a>
-        </div>
-        </div>
-
-        <button type="button" className="btn btn-primary btn-block mb-4">Sign in</button>
-
-            <div className="text-center">
-            <p>Not a member? <a href="#!">Register</a></p>
-            <p>or sign up with:</p>
-        <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-google"></i>
-        </button>
-
-        <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-github"></i>
-        </button>
-        </div>
-</form>
-  );
-};
-
-export default Login;
-
-export function Login() {
-  return (
-    <div>
-      <LoginForm />
-    </div>
+      <Button variant="primary" type="submit" className="mx-5 mt-3 px-4 py-2 bg-dark text-white">
+        Sign in
+      </Button>
+    </Form>
+  </Container>
   );
 }
+
+export default function Login() {
+  return (
+    <div>
+      <hr />
+      <h1 className='d-flex justify-content-center align-items-center'>Log in</h1>
+      <LoginForm />
+    </div>
+  )
+  }
