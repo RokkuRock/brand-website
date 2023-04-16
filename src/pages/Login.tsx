@@ -31,23 +31,29 @@ function LoginForm() {
   }  
 
   return (
-  <Container>
-    <Menu style={{ marginTop: 25 }}>
-    <Menu.Item style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Button active={activeItem ==="register"} onClick={() => setActiveItem('register')} style={{ marginRight: 3 }} >註冊</Button>
-      <Button active={activeItem ==="signin"} onClick={() => setActiveItem('signin')} style={{ marginLeft: 3 }} >登入</Button>
-    </Menu.Item>
-    </Menu>
-    <Form onSubmit={onSubmit}>
-      <Form.Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Your Email" type="email"/>
-      <Form.Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)}placeholder="Enter Your Password" type="password"/>
-      <Form.Button>
-        {activeItem === 'register' && '註冊'}
-        {activeItem === 'signin' && '登入'}
-      </Form.Button>
-    </Form>
-  </Container>
-  );
+    <Container>
+      <Menu style={{ marginTop: 25 }}>
+        <Menu.Item style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Button active={activeItem ==="register"} onClick={() => setActiveItem('register')} style={{ marginRight: 3 }} >註冊</Button>
+          <Button active={activeItem ==="signin"} onClick={() => setActiveItem('signin')} style={{ marginLeft: 3 }} >登入</Button>
+        </Menu.Item>
+      </Menu>
+      <Form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 25 }} onSubmit={onSubmit}>
+        <Form.Field style={{ width: '100%', marginBottom: 3 }}>
+          <label>Email</label>
+          <Form.Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Your Email" type="email"/>
+        </Form.Field>
+        <Form.Field style={{ width: '100%', marginBottom: 3 }}>
+          <label>Password</label>
+          <Form.Input value={password} onChange={(e) => setPassword(e.target.value)}placeholder="Enter Your Password" type="password"/>
+        </Form.Field>
+        <Form.Button style={{ marginTop: 3 }}>
+          {activeItem === 'register' && '註冊'}
+          {activeItem === 'signin' && '登入'}
+        </Form.Button>
+      </Form>
+    </Container>
+  );  
 }
 
 export default function Login() {

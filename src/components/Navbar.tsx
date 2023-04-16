@@ -1,8 +1,31 @@
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap"
-import { NavLink } from "react-router-dom"
+import { Menu } from "semantic-ui-react"
+import { NavLink, Link } from "react-router-dom"
 import { useShoppingCart } from "../context/ShoppingCartContext"
+import React from "react"
+import firebase from "../utilities/firebase"
+import { useNavigate} from 'react-router-dom';
 
-export function Navbar () {
+export function Navbar() {
+    const [user, setUser] = React.useState<firebase.User | null>(null);
+    const navigate = useNavigate()
+
+    React.useEffect(() => {
+      firebase.auth().onAuthStateChanged((currentUser) => {
+        if (currentUser !== null) {
+          setUser(currentUser);
+        }
+      });
+    }, []);
+    const handleSignOut = () => {
+        firebase.auth().signOut().then(() => {
+          setUser(null);
+          navigate("/");
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+
     const { openCart, cartQuantity } = useShoppingCart()
     return (
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
@@ -12,7 +35,22 @@ export function Navbar () {
                 <Nav.Link to="/store" as={NavLink}>Store</Nav.Link>
                 <Nav.Link to="/about" as={NavLink}>About</Nav.Link>
             </Nav>
-            <Button style={{position: "relative" , margin: "10px" }} ><Nav.Link to="/login" as={NavLink}>Login</Nav.Link></Button>
+            <Menu>
+            {user ? <>
+                <Menu.Item as={Link} to="/new-post">
+                    發表文章
+                </Menu.Item>
+                <Menu.Item as={Link} to="/member">
+                    會員
+                </Menu.Item>
+                <Menu.Item onClick={handleSignOut}>
+                    <Button>登出</Button>
+                </Menu.Item>
+            </> : <Menu.Item as={Link} to="/login">
+                    註冊/登入
+                </Menu.Item>}
+            
+            </Menu>
             <Button 
                 onClick ={openCart}
                 style={{width: "3rem", height: "3rem", position: "relative" }} 
